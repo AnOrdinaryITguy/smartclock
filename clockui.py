@@ -28,6 +28,6 @@ while True:
         # Print the train times    
         tprint("Metro",font=settings.sub_clock_font,chr_ignore=True) # print ASCII text (block font)
         for update in statusupdates.SLStoringList:
-            print(update.direction, update.displaytime)
+            tprint(str(update.direction)+" "+str(update.displaytime), font=settings.sub_clock_font,chr_ignore=True)
         savedtime=clocklogic.ClockWidget.CurrentTime()
         continue
