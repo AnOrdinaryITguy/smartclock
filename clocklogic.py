@@ -15,35 +15,28 @@ class ClockWidget():
         for timeslot in statusupdates.WeatherStoringList:
             if strftime('%Y-%m-%d hour: %H') == datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%Y-%m-%d hour: %H'):
                 currentweather.clear()
-                currentweather.append(timeslot.forecast)
+                currentweather.append(str(timeslot.forecast)+", "+str(timeslot.temperature)+ " °C")
 
 
     def CurrentTime():
-        GetCurrentTime = strftime('%H:%M')
-        #add day of the week after this section!
         DayOfTheWeek = strftime('%A')
-
         #Checks for the APIs
         ClockWidget.TimeChecks()
-        return GetCurrentTime
-        
-    def CurrentDay():
-        #add day of the week after this section!
-        DayOfTheWeek = strftime('%A')
-        #Checks for the APIs
-        ClockWidget.DayChecks()
-        return DayOfTheWeek
+        #ClockWidget.DayChecks()
+        # Added a clock filter for the night:
+        if 0 <= int(strftime('%-H')) <= 8:
+            GetCurrentTime = 'Go to bed:)'
+        else:
+            GetCurrentTime = strftime('%H:%M')
+
+        if strftime('%A') == "Saturday" or strftime('%A') == "Sunday":
+            return str(DayOfTheWeek)+" "+str(GetCurrentTime)+"\nIt's Weekend!"
+        else:
+            return str(DayOfTheWeek)+" "+str(GetCurrentTime)+"\nIt's workday:("
 
     def CurrentYear():
         CurrentDate = strftime('%-d %B %Y')
         return CurrentDate
-
-    def DayChecks():
-        if strftime('%A') == "Saturday" or strftime('%A') == "Sunday":
-            print("◕_◕ It's Weekend (◕ᴥ◕ʋ)")
-        else:
-            print("•`_´• It's a workday (╯°□°)╯︵ ┻━┻")
-
 
     def TimeChecks():
         EveryHourCheck = strftime('%M:%S')
@@ -53,7 +46,7 @@ class ClockWidget():
             # checks if the date and report is equal to the weather reports date and time
                 if strftime('%Y-%m-%d hour: %H') == datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%Y-%m-%d hour: %H'):
                     currentweather.clear()
-                    currentweather.append(timeslot.forecast)
+                    currentweather.append(str(timeslot.forecast)+", "+str(timeslot.temperature)+ " °C")
                 else:
                     # If no weather matching the current time is find update the list with new times and run the function again.
                     statusupdates.GeneralUpdates.UpdateWeather()
@@ -62,4 +55,5 @@ class ClockWidget():
         if EveryMinuteCheck == '00':
             statusupdates.GeneralUpdates.UpdateSLtimetables()
             #print("Updating Stored SL Data")
+        ClockWidget.CurrentTime.Weekend_check = True
 
