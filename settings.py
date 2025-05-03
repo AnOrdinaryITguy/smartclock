@@ -11,8 +11,7 @@ class Settings:
 
         '''UI update Section'''
         self.main_clock_font = 'tarty1'
-        self.sub_clock_font = 'tart4'
-        self.mid_clock_font = 'univers'
+        self.sub_clock_font = 'tarty4'
 
 
 
