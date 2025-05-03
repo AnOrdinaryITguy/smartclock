@@ -13,10 +13,13 @@ class ClockWidget():
         statusupdates.GeneralUpdates.UpdateSLtimetables()
         statusupdates.GeneralUpdates.UpdateWeather()
         for timeslot in statusupdates.WeatherStoringList:
-            if strftime('%Y-%m-%d hour: %H') == datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%Y-%m-%d hour: %H'):
+            if timeslot.validtime != "null":
+                if strftime('%Y-%m-%d hour: %H') == datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%Y-%m-%d hour: %H'):
+                    currentweather.clear()
+                    currentweather.append(str(timeslot.forecast)+", "+str(timeslot.temperature)+ " °C")
+            else:
                 currentweather.clear()
                 currentweather.append(str(timeslot.forecast)+", "+str(timeslot.temperature)+ " °C")
-
 
     def CurrentTime():
         DayOfTheWeek = strftime('%A')
@@ -25,7 +28,7 @@ class ClockWidget():
         #ClockWidget.DayChecks()
         # Added a clock filter for the night:
         if 0 <= int(strftime('%-H')) <= 8:
-            GetCurrentTime = 'Go to bed:)'
+            GetCurrentTime = '--:--'
         else:
             GetCurrentTime = strftime('%H:%M')
 
@@ -44,13 +47,17 @@ class ClockWidget():
         if EveryHourCheck == '00:10':
             for timeslot in statusupdates.WeatherStoringList:
             # checks if the date and report is equal to the weather reports date and time
-                if strftime('%Y-%m-%d hour: %H') == datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%Y-%m-%d hour: %H'):
+                if timeslot.validtime != "null":
+                    if strftime('%Y-%m-%d hour: %H') == datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%Y-%m-%d hour: %H'):
+                        currentweather.clear()
+                        currentweather.append(str(timeslot.forecast)+", "+str(timeslot.temperature)+ " °C")
+                    else:
+                        # If no weather matching the current time is find update the list with new times and run the function again.
+                        statusupdates.GeneralUpdates.UpdateWeather()
+                        ClockWidget.TimeChecks()
+                else:
                     currentweather.clear()
                     currentweather.append(str(timeslot.forecast)+", "+str(timeslot.temperature)+ " °C")
-                else:
-                    # If no weather matching the current time is find update the list with new times and run the function again.
-                    statusupdates.GeneralUpdates.UpdateWeather()
-                    ClockWidget.TimeChecks()
 
         if EveryMinuteCheck == '00':
             statusupdates.GeneralUpdates.UpdateSLtimetables()

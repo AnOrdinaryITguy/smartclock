@@ -3,11 +3,11 @@ class Settings:
     def __init__(self):
         '''Status update Section'''
         # Enter the SL station ID
-        self.station_id = '3490'
+        self.station_id = ''
         # Enter the longitude of the position you want weather updates for
-        self.weather_lon = '18'
+        self.weather_lon = ''
         # Enter the latitude of the position you want weather updates for
-        self.weather_lat = '59'
+        self.weather_lat = ''
 
         '''UI update Section'''
         self.main_clock_font = 'tarty1'
