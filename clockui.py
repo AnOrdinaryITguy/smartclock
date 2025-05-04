@@ -12,6 +12,7 @@ clocklogic.ClockWidget.IntitialStart()
 
 savedtime=clocklogic.ClockWidget.CurrentTime()
 
+os.system('cls' if os.name == 'nt' else 'clear')
 tprint(clocklogic.ClockWidget.CurrentTime(),font=settings.main_clock_font,chr_ignore=True) # print ASCII text (block font)
 tprint(clocklogic.ClockWidget.CurrentYear(),font=settings.main_clock_font,chr_ignore=True) # print ASCII text (block font)
 

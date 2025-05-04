@@ -33,16 +33,20 @@ class ClockWidget():
         #Checks for the APIs
         ClockWidget.TimeChecks()
         #ClockWidget.DayChecks()
+        GetCurrentTime = strftime('%H:%M')
+        DayOfTheWeek = strftime('%A')
+
         # Added a clock filter for the night:
         if 0 <= int(strftime('%-H')) <= 8:
-            GetCurrentTime = '--:--'
+            if strftime('%A') == "Saturday" or strftime('%A') == "Sunday":
+                return '--:--'+"\n"+str(DayOfTheWeek)+"\nIt's Weekend!"
+            else:
+                return '--:--'+"\n"+str(GetCurrentTime)+"\nIt's workday:("
         else:
-            GetCurrentTime = strftime('%H:%M')
-
-        if strftime('%A') == "Saturday" or strftime('%A') == "Sunday":
-            return str(GetCurrentTime)+"\n"+str(DayOfTheWeek)+"\nIt's Weekend!"
-        else:
-            return str(GetCurrentTime)+"\n"+str(GetCurrentTime)+"\nIt's workday:("
+            if strftime('%A') == "Saturday" or strftime('%A') == "Sunday":
+                return str(GetCurrentTime)+"\n"+str(DayOfTheWeek)+"\nIt's Weekend!"
+            else:
+                return str(GetCurrentTime)+"\n"+str(GetCurrentTime)+"\nIt's workday:("
 
     def CurrentYear():
         CurrentDate = strftime('%-d %B %Y')
@@ -52,6 +56,7 @@ class ClockWidget():
         EveryHourCheck = strftime('%M:%S')
         EveryMinuteCheck = strftime('%S')
         if EveryHourCheck == '00:10':
+            currentweather.clear() # Current fix to avoid filling the list with shit.
             for timeslot in statusupdates.WeatherStoringList:
                 if timeslot.validtime != "null":
                     WeatherReportTime = datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%Y-%m-%d hour: %H')
