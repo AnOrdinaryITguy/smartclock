@@ -19,9 +19,8 @@ class ClockWidget():
                 CurrentTime = strftime('%Y-%m-%d hour: %H')
                 OneDay = (datetime.now() + timedelta(hours=24)).strftime('%Y-%m-%d hour: %H')
                 TwoDay = (datetime.now() + timedelta(hours=48)).strftime('%Y-%m-%d hour: 12')
-                ThreeDay = (datetime.now() + timedelta(hours=72)).strftime('%Y-%m-%d hour: 12')
 
-                if WeatherReportTime in (CurrentTime, OneDay, TwoDay, ThreeDay):
+                if WeatherReportTime in (CurrentTime, OneDay, TwoDay):
                     currentweather.append(str(datetime.strftime(datetime.strptime(timeslot.validtime, '%Y-%m-%dT%H:%M:%SZ'),'%A'))+"\n-"+str(timeslot.forecast)+", "+str(timeslot.temperature)+ " °C")
 
             else:
